@@ -1,5 +1,6 @@
-import { isUserAuthenticated, getToken, getUsername, isUserAdmin } from '../utils/auth'
- const host = 'http://localhost:3000/';
+import {  getToken, } from '../utils/auth'
+
+const host = 'http://localhost:3000/';
 
  async function register(username, email, password) {
      const res = await window.fetch(host + 'auth/signup', {
@@ -43,6 +44,7 @@ import { isUserAuthenticated, getToken, getUsername, isUserAdmin } from '../util
  }
 
  async function createProduct(data) {
+     console.log(data);
      const res = await window.fetch(host + 'product/create', {
          method: 'POST',
          headers: {
@@ -50,8 +52,8 @@ import { isUserAuthenticated, getToken, getUsername, isUserAdmin } from '../util
              'Authorization': 'bearer ' + getToken()
          },
          body: JSON.stringify(data)
-     })
-
+     });
+console.log(res);
      return res.json()
  }
 
@@ -136,8 +138,8 @@ import { isUserAuthenticated, getToken, getUsername, isUserAdmin } from '../util
      return res.json()
  }
 
- async function fetchPendingOrders() {
-     const res = await window.fetch(host + 'orders/pending', {
+ async function fetchAllOrders() {
+    const res = await window.fetch(host + 'orders/all', {
          headers: {
              'Authorization': 'bearer ' + getToken()
          }
@@ -169,6 +171,6 @@ import { isUserAuthenticated, getToken, getUsername, isUserAdmin } from '../util
      unlikeProduct,
      submitOrder,
      fetchUserOrders,
-     fetchPendingOrders,
+     fetchAllOrders,
      approveOrder
  } 

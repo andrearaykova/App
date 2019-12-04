@@ -3,6 +3,7 @@ import React, { Component } from 'react';
  import loginValidator from '../utils/loginValidator';
  import errorHandler from '../utils/errorHandler';
  import { toast } from 'react-toastify';
+ import 'react-toastify/dist/ReactToastify.css';
  import { withRouter } from 'react-router-dom';
 
  class LoginPopup extends Component {
@@ -78,7 +79,7 @@ import React, { Component } from 'react';
 
                          <div className="w3-container w3-border-top w3-padding-16 w3-light-grey">
                              <button onClick={() => { document.getElementById('id01').style.display = 'none'; }}
-                                 type="button" className="w3-button w3-red">Cancel</button>
+                                 type="button" className="w3-button w3-red w3-block">Cancel</button>
                          </div>
 
                      </div>

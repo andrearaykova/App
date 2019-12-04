@@ -1,9 +1,16 @@
 import React, { Component, Fragment } from 'react';
- import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
  import { ToastContainer } from 'react-toastify';
  import { isUserAuthenticated, getToken, getUsername, isUserAdmin } from './utils/auth';
  import HomePage from './components/HomePage';
+ import CreatePage from './components/CreatePage';
  import Navbar from './components/Navbar';
+ import EditPage from './components/EditPage';
+ import DetailsPage from './components/DetailsPage';
+ import Cart from './components/Cart';
+ import Orders from './components/Orders';
+ import OrderDetails from './components/OrderDetails';
+ import AllOrders from './components/AllOrders';
 
  class App extends Component {
    constructor(props) {
@@ -20,8 +27,6 @@ import React, { Component, Fragment } from 'react';
      if (isUserAuthenticated()) {
        this.setState({ loggedIn: true });
      }
-     {/*this.props.fetchStats()
-     this.props.fetchProducts()*/}
    }
 
    logout() {
@@ -31,19 +36,26 @@ import React, { Component, Fragment } from 'react';
    }
 
    render() {
+    const isAdmin = isUserAdmin();
+    const loggedIn = this.state.loggedIn;
+
      return (
        <Fragment>
          <Navbar
-           /*products={productsCount}
-           users={usersCount}*/
-           loggedIn={this.state.loggedIn}
-           isAdmin={isUserAdmin()}
+           loggedIn={loggedIn}
+           isAdmin={isAdmin}
            logout={this.logout}
          />
          <Switch>
-           <Route exact path='/' component={HomePage} />
-           {/*<Route exact path='/store' component={StorePage} />
-           */}
+         <Route exact path='/' render={() => <HomePage isAdmin={isAdmin} />} />
+           <Route exact path='/create' render={() => <CreatePage isAdmin={isAdmin} />} />
+           <Route exact path='/edit/:id' render={() => <EditPage isAdmin={isAdmin} />} />
+           <Route exact path='/products/details/:id' render={() => <DetailsPage loggedIn={loggedIn} />} />
+           <Route exact path='/cart' render={() => <Cart loggedIn={loggedIn} />} />
+           <Route exact path='/orders' render={() => <Orders loggedIn={loggedIn} />} />
+           <Route exact path='/orders/details/:id' render={() => <OrderDetails loggedIn={loggedIn} isAdmin={isAdmin} />} />
+           <Route exact path='/orders/all' render={() => <AllOrders isAdmin={isAdmin} />} />
+           <Redirect to='/' />
          </Switch>
          <ToastContainer
            position="top-center"

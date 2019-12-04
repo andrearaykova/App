@@ -32,16 +32,16 @@ const express = require('express')
 
  router.get('/user', authCheck, (req, res) => {
    Order
-     .find({creator: req.user._id})
+     .find({ creator: req.user._id })
      .then(orders => {
        res.status(200).json(orders)
      })
  })
 
- router.get('/pending', authCheck, (req, res) => {
+ router.get('/all', authCheck, (req, res) => {
    if (req.user.roles.indexOf('Admin') > -1) {
      Order
-       .find({status: 'Pending'})
+       .find({})
        .then(orders => {
          res.status(200).json(orders)
        })
